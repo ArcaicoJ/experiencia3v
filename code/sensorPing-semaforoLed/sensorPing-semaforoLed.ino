@@ -25,6 +25,11 @@
    readUltrasonicDistance(int triggerPin, int echoPin): Referencia obtenida de sensor ultrasonico tinkercad.com
 */
 
+//declaración variables globales
+
+int const greenPin = 8;
+int const yellowPin = 5;
+int const redPin = 3;
 
 /*
 Inicio declaracion funcion readUltrasonicDistance
@@ -52,9 +57,10 @@ Inicio funcion setup
 */
 void setup()
 {
-  pinMode(8, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(2, OUTPUT);
+  Serial.begin(9600);// comunicación serial 9600 caracteres por segundo
+  pinMode(greenPin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
+  pinMode(redPin, OUTPUT);
 }
 /*
 Fin funcion setup
@@ -66,29 +72,30 @@ Inicio funcion loop
 */
 void loop()
 {
-  int distancia = 0.01723 * readUltrasonicDistance(2, 2);
+  float distancia = 0.01723 * readUltrasonicDistance(2, 2);
 
-  if((distancia <= 333) && (distancia >= 200)) {
-    digitalWrite(8, HIGH);
+  if((distancia <= 336) && (distancia >= 200)) {
+    digitalWrite(redPin, HIGH);
   } 
   else {
-    digitalWrite(8, LOW); 
+    digitalWrite(redPin, LOW); 
   }
   if((distancia < 200) && (distancia >= 100)) {
-    digitalWrite(7, HIGH);
+    digitalWrite(yellowPin, HIGH);
   } 
   else {
-    digitalWrite(7, LOW); 
+    digitalWrite(yellowPin,LOW); 
   }
   if(distancia < 100) {
-    digitalWrite(4, HIGH);
+    digitalWrite(greenPin, HIGH);
   } 
   else {
-    digitalWrite(4, LOW); 
-  }
-   
-
-  delay(10); // Delay a little bit to improve simulation performance
+    digitalWrite(greenPin, LOW); 
+  }  
+  /*SE COMPARA MONITOR SERIE CON VALOR VISUAL DEL SENSOR SUS RANGO*/
+  //Serial.print("distancia: "); //IMPRIMIR EN MONITOR SERIE
+  //Serial.println(distancia+1.8); // IMPRIME VALOR DE DISTANCIA 
+  //delay(10); // Delay a little bit to improve simulation performance
 }
 /*
 Inicio funcion loop
